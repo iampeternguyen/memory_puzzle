@@ -1,6 +1,5 @@
 require_relative("card.rb")
 
-
 class Board
   attr_reader :cards
 
@@ -9,6 +8,16 @@ class Board
     @cards = []
     @board = Array.new(size) {Array.new(size)}
     @num_pairs = (size*size) / 2
+  end
+
+  def won?
+    @cards.all? {|card| !card.is_face_down}
+  end
+
+  def reveal(position)
+    row, col = position
+    @board[row][col].reveal
+    self.render
   end
 
   def populate
@@ -33,7 +42,8 @@ class Board
     @cards.shuffle!
   end
 
-  def print_board
+  def render
+    system "clear"
     @board.each_with_index do |row, idx1|
       if idx1 == 0
         print "  "
@@ -54,7 +64,8 @@ class Board
 end
 
 if __FILE__ == $PROGRAM_NAME
-  board = Board.new(4)
-  board.populate
-  board.print_board
+  # board = Board.new(4)
+  # board.populate
+  # board.render
+  # board.reveal([0,0])
 end
