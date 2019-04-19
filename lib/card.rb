@@ -1,6 +1,8 @@
 class Card
+  @@cards = ("A".."Z").to_a.join("")
+
   def initialize(value)
-    @value = value
+    @value = @@cards[value]
     @is_face_down = true
   end
 
