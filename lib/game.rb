@@ -1,19 +1,21 @@
 require_relative "board.rb"
+require_relative "player.rb"
 
 class Game
   def initialize
     @board = Board.new(2)
     @prev_guesses = []
+    @player = Player.new
   end
 
   def play
     while !@board.won?
       @board.render
-      pos1 = prompt_user
+      pos1 = @player.prompt_user
       card1 = @board.get_card(pos1)
       @board.reveal(pos1)
       @board.render
-      pos2 = prompt_user
+      pos2 = @player.prompt_user
       card2 = @board.get_card(pos2)
 
       @board.reveal(pos2)
@@ -29,16 +31,7 @@ class Game
     puts "You win!"
   end
 
-  def prompt_user
-    print "Enter a location: "
-    input = gets.chomp.split(" ").map {|pos| pos.to_i}
-    if !input.length == 2
-      puts "Invalid input. Please enter a two digit position separated by a space."
-      self.prompt_user
-    else
-      return input
-    end
-  end
+
 end
 
 if __FILE__ == $PROGRAM_NAME
