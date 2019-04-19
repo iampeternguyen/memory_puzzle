@@ -8,6 +8,7 @@ class Board
     @cards = []
     @board = Array.new(size) {Array.new(size)}
     @num_pairs = (size*size) / 2
+    self.populate
   end
 
   def won?
@@ -17,7 +18,11 @@ class Board
   def reveal(position)
     row, col = position
     @board[row][col].reveal
-    self.render
+  end
+
+  def hide(position)
+    row, col = position
+    @board[row][col].hide
   end
 
   def populate
@@ -35,6 +40,11 @@ class Board
     end
   end
 
+  def get_card(position)
+    row, col = position
+    return @board[row][col]
+  end
+
   def create_card_pairs
     @num_pairs.times do |time|
       2.times {@cards << Card.new(time)}
@@ -43,7 +53,7 @@ class Board
   end
 
   def render
-    system "clear"
+
     @board.each_with_index do |row, idx1|
       if idx1 == 0
         print "  "

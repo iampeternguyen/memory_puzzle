@@ -1,5 +1,5 @@
 class Card
-  attr_reader :is_face_down
+  attr_reader :is_face_down, :value
 
   @@cards = ("A".."Z").to_a.join("")
 
@@ -19,5 +19,9 @@ class Card
   def to_s
     return @value unless @is_face_down
     return " "
+  end
+
+  def ==(other_card)
+    self.value == other_card.value
   end
 end
