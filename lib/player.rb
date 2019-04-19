@@ -1,9 +1,8 @@
 class Player
-  def initialize
-
+  def initialize(board_size)
   end
 
-  def prompt_user
+  def get_input(board_size)
     print "Enter a location: "
     input = gets.chomp.split(" ").map {|pos| pos.to_i}
     if !input.length == 2
