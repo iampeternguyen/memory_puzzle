@@ -53,7 +53,8 @@ class Board
   end
 
   def render
-
+    system 'clear'
+    system 'cls'
     @board.each_with_index do |row, idx1|
       if idx1 == 0
         print "  "

@@ -2,7 +2,7 @@ require_relative "board.rb"
 
 class Game
   def initialize
-    @board = Board.new(4)
+    @board = Board.new(2)
     @prev_guesses = []
   end
 
@@ -26,6 +26,7 @@ class Game
         card2.hide
       end
     end
+    puts "You win!"
   end
 
   def prompt_user
