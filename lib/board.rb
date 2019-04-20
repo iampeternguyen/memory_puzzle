@@ -41,7 +41,6 @@ class Board
   end
 
   def get_card(position)
-    p position
     row, col = position
     return @game_board[row][col]
   end
@@ -54,11 +53,11 @@ class Board
   end
 
   def render
-    # if RUBY_PLATFORM =~ /win32|win64|\.NET|windows|cygwin|mingw32/i
-    #   system('cls')
-    # else
-    #   system('clear')
-    # end
+    if RUBY_PLATFORM =~ /win32|win64|\.NET|windows|cygwin|mingw32/i
+      system('cls')
+    else
+      system('clear')
+    end
 
     @game_board.each_with_index do |row, idx1|
       if idx1 == 0

@@ -8,15 +8,7 @@ class AiPlayer
 
   def get_input1
     card_value = get_known_pair_value
-    p "pair value: #{card_value}"
-    if card_value
-      input = find_card_location(card_value)
-      get_input if !input
-    else
-      input = get_hidden_card_locations.sample
-    end
-    input
-
+    input = card_value!=nil ? find_card_location(card_value) : get_hidden_card_locations.sample
   end
 
   def get_input2(pos1)
@@ -25,11 +17,6 @@ class AiPlayer
     input = find_card_location(card1.value)
     input ||= get_hidden_card_locations.sample
     input
-  end
-
-  def card_is_hidden?(loc)
-    row, col = loc
-    return @board[row][col].is_face_down
   end
 
   def get_hidden_card_locations
@@ -64,17 +51,16 @@ class AiPlayer
       return k if v == 2 && !revealed_pairs.include?(k)
     end
 
-
     return nil
-
-
   end
 
   def find_card_location(value)
     @known.each_with_index do |row, idx1|
       row.each_with_index do |card, idx2|
-        if card.value == value && card_is_hidden?([idx1,idx2])
-          return [idx1, idx2]
+        if card
+          if card.value == value && card.is_face_down
+            return [idx1, idx2]
+          end
         end
       end
     end
