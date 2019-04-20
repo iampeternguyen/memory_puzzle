@@ -48,25 +48,33 @@ class AiPlayer
   end
 
   def get_known_pair_value
-    count = Hash.new(0)
+    known_count = Hash.new(0)
     @known.flatten.each do |card|
-      count[card.value] += 1 if card
+      known_count[card.value] += 1 if card
     end
 
-    count.each do |k, v|
-      return k if v == 2
+    revealed_count = Hash.new(0)
+    @board.flatten.each do |card|
+      revealed_count[card.value] += 1 if !card.is_face_down
     end
+
+    revealed_pairs = revealed_count.keys.select {|k| revealed_count[k] == 2}
+
+    known_count.each do |k, v|
+      return k if v == 2 && !revealed_pairs.include?(k)
+    end
+
+
     return nil
+
+
   end
 
   def find_card_location(value)
     @known.each_with_index do |row, idx1|
       row.each_with_index do |card, idx2|
-        if card
-          if card.value == value && card_is_hidden?([idx1,idx2])
-            @known[idx1][idx2] = nil
-            return [idx1, idx2]
-          end
+        if card.value == value && card_is_hidden?([idx1,idx2])
+          return [idx1, idx2]
         end
       end
     end

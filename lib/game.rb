@@ -3,11 +3,11 @@ require_relative "player.rb"
 require_relative "aiplayer.rb"
 
 class Game
-  GAME_SIZE = 2 #must be even number
+  GAME_SIZE = 4 #must be even number
   def initialize
     @board = Board.new(GAME_SIZE)
     @prev_guesses = []
-    @player = Player.new(@board)
+    @player = AiPlayer.new(@board)
   end
 
   def play
