@@ -3,26 +3,24 @@ require_relative "player.rb"
 require_relative "aiplayer.rb"
 
 class Game
-  GAME_SIZE = 2
+  GAME_SIZE = 2 #must be even number
   def initialize
     @board = Board.new(GAME_SIZE)
     @prev_guesses = []
-    @player = AiPlayer.new(GAME_SIZE)
+    @player = Player.new(@board)
   end
 
   def play
     while !@board.won?
       @board.render
-      pos1 = @player.get_input
+      pos1 = @player.get_input1
       card1 = @board.get_card(pos1)
-      @player.save_card(card1, pos1)
 
       @board.reveal(pos1)
       @board.render
 
-      pos2 = @player.get_input
+      pos2 = @player.get_input2(pos1)
       card2 = @board.get_card(pos2)
-      @player.save_card(card2, pos2)
 
 
       @board.reveal(pos2)
@@ -31,6 +29,8 @@ class Game
       sleep(1)
 
       if card1 != card2
+        @player.save_card(card1, pos1)
+        @player.save_card(card2, pos2)
         card1.hide
         card2.hide
       end

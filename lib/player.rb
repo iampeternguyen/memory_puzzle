@@ -1,8 +1,11 @@
 class Player
-  def initialize(board_size)
+  def initialize(board)
+    @board = board.game_board
+    @board_size = @board.length
+    @known = Array.new(@board_size) {Array.new(@board_size)}
   end
 
-  def get_input(board_size)
+  def get_input1
     print "Enter a location: "
     input = gets.chomp.split(" ").map {|pos| pos.to_i}
     if !input.length == 2
@@ -11,5 +14,13 @@ class Player
     else
       return input
     end
+  end
+
+  def get_input2(*args)
+    get_input1
+  end
+
+  def save_card(*args)
+    #dummy function
   end
 end

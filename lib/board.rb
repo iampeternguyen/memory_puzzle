@@ -1,12 +1,12 @@
 require_relative("card.rb")
 
 class Board
-  attr_reader :cards
+  attr_reader :cards, :game_board
 
 
   def initialize(size)
     @cards = []
-    @board = Array.new(size) {Array.new(size)}
+    @game_board = Array.new(size) {Array.new(size)}
     @num_pairs = (size*size) / 2
     self.populate
   end
@@ -17,12 +17,12 @@ class Board
 
   def reveal(position)
     row, col = position
-    @board[row][col].reveal
+    @game_board[row][col].reveal
   end
 
   def hide(position)
     row, col = position
-    @board[row][col].hide
+    @game_board[row][col].hide
   end
 
   def populate
@@ -32,17 +32,18 @@ class Board
 
   def populate_board
     idx = 0
-    (0...@board.length).each do |row|
-      (0...@board.length).each do |col|
-        @board[row][col] = @cards[idx]
+    (0...@game_board.length).each do |row|
+      (0...@game_board.length).each do |col|
+        @game_board[row][col] = @cards[idx]
         idx += 1
       end
     end
   end
 
   def get_card(position)
+    p position
     row, col = position
-    return @board[row][col]
+    return @game_board[row][col]
   end
 
   def create_card_pairs
@@ -53,9 +54,13 @@ class Board
   end
 
   def render
-    system 'clear'
-    system 'cls'
-    @board.each_with_index do |row, idx1|
+    # if RUBY_PLATFORM =~ /win32|win64|\.NET|windows|cygwin|mingw32/i
+    #   system('cls')
+    # else
+    #   system('clear')
+    # end
+
+    @game_board.each_with_index do |row, idx1|
       if idx1 == 0
         print "  "
         row_headers = (0...row.length).to_a
